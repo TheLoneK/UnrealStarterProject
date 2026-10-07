@@ -13,5 +13,20 @@ UCLASS()
 class STARTUPPLUGIN_API USP_GameInstance : public UGameInstance
 {
 	GENERATED_BODY()
+
+	// Constructor
+	USP_GameInstance();
+
+
+
+	//Initialization when the instance is created
+	virtual void Init() override;
+
+	//Called when the instance is shutting down
+	virtual void Shutdown() override;
+
+
+	UFUNCTION(BlueprintCallable)
+	void InitAbilitySystemGlobals();
 	
 };

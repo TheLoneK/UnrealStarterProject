@@ -10,6 +10,7 @@
 
 
 class USP_MovementComponent;
+class USP_AbilitySystemComponent;
 class UAttributeSet;
 
 

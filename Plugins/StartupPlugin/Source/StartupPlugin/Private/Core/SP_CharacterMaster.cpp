@@ -274,7 +274,7 @@ void ASP_CharacterMaster::UpdateCharacterMoveSpeedUsingMultiplier_Implementation
 #pragma endregion
 
 
-#pragma region SP_GASInterface Implementations
+#pragma region SP_Interface Implementations
 
 /*
 void ASP_CharacterMaster::UpdateMoveSpeedMultiplierValue_Implementation(float Value)
