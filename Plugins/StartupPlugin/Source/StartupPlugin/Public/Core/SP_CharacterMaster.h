@@ -44,21 +44,21 @@ public:
 	//virtual void OnDamaged_Implementation(float Damage, const FGameplayTagContainer& GameplayTags, AActor* SourceActor, AActor* TargetActor) override;
 
 	//movement component implementations
-	//UFUNCTION(BlueprintNativeEvent)
-	//void PhysNetCustom(float DeltaTime, int32 Iterations);
+	UFUNCTION(BlueprintNativeEvent)
+	void PhysNetCustom(float DeltaTime, int32 Iterations);
 
-	//UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Movement Component")
-	//USP_MovementComponent* GetCharacterMovementComponent() const;
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Movement Component")
+	USP_MovementComponent* GetCharacterMovementComponent() const;
 
-	//UFUNCTION(BlueprintNativeEvent)
-	//void OnMovementUpdatedCustom(float DeltaSeconds, const FVector& OldLocation, const FVector& OldVelocity);
+	UFUNCTION(BlueprintNativeEvent)
+	void OnMovementUpdatedCustom(float DeltaSeconds, const FVector& OldLocation, const FVector& OldVelocity);
 
 
-	//UFUNCTION(Client, Reliable)
-	//void UpdateCharacterGroundMovespeed(float NewMoveSpeed);
+	UFUNCTION(Client, Reliable)
+	void UpdateCharacterGroundMovespeed(float NewMoveSpeed);
 
-	//UFUNCTION(Client, Reliable)
-	//void UpdateCharacterMoveSpeedUsingMultiplier(float NewMoveSpeedMultiplier);
+	UFUNCTION(Client, Reliable)
+	void UpdateCharacterMoveSpeedUsingMultiplier(float NewMoveSpeedMultiplier);
 
 
 
@@ -76,11 +76,11 @@ protected:
 	//TWeakObjectPtr<class UAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY()
-	class USP_AbilitySystemComponent* AbilitySystemComponent;
+	TObjectPtr<USP_AbilitySystemComponent> AbilitySystemComponent;
 
 	//the default stat class for the character
 	UPROPERTY()
-	class UAttributeSet* CharacterAttributeSet;
+	TObjectPtr<UAttributeSet> CharacterAttributeSet;
 
 	// Default abilities for this Character.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)

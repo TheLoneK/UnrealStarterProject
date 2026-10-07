@@ -61,46 +61,7 @@ UAbilitySystemComponent* ASP_CharacterMaster::GetAbilitySystemComponent() const
 	return nullptr;
 }
 
-/*
-void ASP_CharacterMaster::UpdateMoveSpeedMultiplierValue_Implementation(float Value)
-{
-	UpdateCharacterMoveSpeedUsingMultiplier(Value);
-}
 
-void ASP_CharacterMaster::UpdateCharacterGroundSpeedValue_Implementation(float Value)
-{
-	UpdateCharacterGroundMovespeed(Value);
-}
-
-void ASP_CharacterMaster::OnDamaged_Implementation(float Damage, const FGameplayTagContainer& GameplayTags, AActor* SourceActor, AActor* TargetActor)
-{
-
-}
-
-
-
-
-void ASP_CharacterMaster::UpdateCharacterGroundMovespeed_Implementation(float NewMoveSpeed)
-{
-	GetCharacterMovementComponent()->SetMaxGroundSpeed(NewMoveSpeed);
-}
-
-void ASP_CharacterMaster::UpdateCharacterMoveSpeedUsingMultiplier_Implementation(float NewMoveSpeedMultiplier)
-{
-	float MoveSpeedAttributeValue;
-	float NewMaxGroundSpeed;
-	bool bHasAttribute = false;
-
-	MoveSpeedAttributeValue = GetAbilitySystemComponent()->GetGameplayAttributeValue(USP_BaseAttributes::GetMoveSpeedAttribute(), bHasAttribute);
-
-	NewMaxGroundSpeed = MoveSpeedAttributeValue * NewMoveSpeedMultiplier;
-
-	//universally change the max speed for all movement modes (ground, swim, fly)
-	GetCharacterMovementComponent()->SetMaxGroundSpeed(NewMaxGroundSpeed);
-	//GetCharacterMovementComponent()->SetMaxSwimSpeed(GetAttributeMoveSpeed() * NewMoveSpeedMultiplier);
-	//GetCharacterMovementComponent()->SetMaxFlySpeed(GetAttributeMoveSpeed() * NewMoveSpeedMultiplier);
-}
-*/
 
 
 // Called when the game starts or when spawned
@@ -116,17 +77,6 @@ void ASP_CharacterMaster::Tick(float DeltaTime)
 
 }
 
-float ASP_CharacterMaster::GetHealthStat() const
-{
-	//return CharacterAttributeSet->GetHealthFloatValue();
-	return 0.0f;
-}
-
-float ASP_CharacterMaster::GetMaxHealthStat() const
-{
-	//return CharacterAttributeSet->GetMaxHealthFloatValue();
-	return 0.0f;
-}
 
 
 void ASP_CharacterMaster::PostInitializeComponents()
@@ -189,6 +139,7 @@ void ASP_CharacterMaster::InitializeStartupEffects(float EffectsLevel)
 	}
 }
 
+#pragma region AttributeSet Management
 void ASP_CharacterMaster::GrantCharacterAttributeSets(const TArray<TSubclassOf<UAttributeSet>>& NewSets)
 {
 	// Only the Server should spawn replicated subobjects
@@ -266,21 +217,74 @@ void ASP_CharacterMaster::RemoveCharacterAttributeSets(const TArray<TSubclassOf<
 
 }
 
+float ASP_CharacterMaster::GetHealthStat() const
+{
+	//return CharacterAttributeSet->GetHealthFloatValue();
+	return 0.0f;
+}
 
-/*
+float ASP_CharacterMaster::GetMaxHealthStat() const
+{
+	//return CharacterAttributeSet->GetMaxHealthFloatValue();
+	return 0.0f;
+}
+
+#pragma endregion
+
+
+#pragma region Movemcomponent Implementations
+
 void ASP_CharacterMaster::PhysNetCustom_Implementation(float DeltaTime, int32 Iterations)
 {
 }
 
 USP_MovementComponent* ASP_CharacterMaster::GetCharacterMovementComponent() const
 {
-	USP_CharacterMovementComponent* MyCharacterMovementComponent = static_cast<USP_CharacterMovementComponent*>(GetCharacterMovement());
+	USP_MovementComponent* MyCharacterMovementComponent = static_cast<USP_MovementComponent*>(GetCharacterMovement());
 	return MyCharacterMovementComponent;
 }
 
 void ASP_CharacterMaster::OnMovementUpdatedCustom_Implementation(float DeltaSeconds, const FVector& OldLocation, const FVector& OldVelocity)
 {
 }
+
+
+void ASP_CharacterMaster::UpdateCharacterGroundMovespeed_Implementation(float NewMoveSpeed)
+{
+	GetCharacterMovementComponent()->SetMaxGroundSpeed(NewMoveSpeed);
+}
+
+void ASP_CharacterMaster::UpdateCharacterMoveSpeedUsingMultiplier_Implementation(float NewMoveSpeedMultiplier)
+{
+	float MoveSpeedAttributeValue = 0.0f;
+	float NewMaxGroundSpeed;
+	bool bHasAttribute = false;
+
+	//MoveSpeedAttributeValue = GetAbilitySystemComponent()->GetGameplayAttributeValue(USP_AttributeSet::GetMoveSpeedAttribute(), bHasAttribute);
+
+	NewMaxGroundSpeed = MoveSpeedAttributeValue * NewMoveSpeedMultiplier;
+
+	//universally change the max speed for all movement modes (ground, swim, fly)
+	GetCharacterMovementComponent()->SetMaxGroundSpeed(NewMaxGroundSpeed);
+	//GetCharacterMovementComponent()->SetMaxSwimSpeed(GetAttributeMoveSpeed() * NewMoveSpeedMultiplier);
+	//GetCharacterMovementComponent()->SetMaxFlySpeed(GetAttributeMoveSpeed() * NewMoveSpeedMultiplier);
+}
+
+
+#pragma endregion
+
+
+#pragma region SP_GASInterface Implementations
+
+/*
+void ASP_CharacterMaster::UpdateMoveSpeedMultiplierValue_Implementation(float Value)
+{
+	UpdateCharacterMoveSpeedUsingMultiplier(Value);
+}
+
+void ASP_CharacterMaster::UpdateCharacterGroundSpeedValue_Implementation(float Value)
+{
+	UpdateCharacterGroundMovespeed(Value);
+}
 */
-
-
+#pragma endregion
